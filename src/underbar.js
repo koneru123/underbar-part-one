@@ -15,7 +15,7 @@
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
     /* START SOLUTION */
-
+    return val;
     /* END SOLUTION */
   };
 
@@ -34,7 +34,14 @@
   // return just the first element.
   _.first = function(array, n) {
     /* START SOLUTION */
-
+    if(n === undefined) {
+      return array[0];
+    } if(array.length === 0) {
+      return [];
+    } if(!Array.isArray(array)) {
+      return [];
+    }
+      return array.slice(array[0],n);
     /* END SOLUTION */
   };
 
@@ -43,6 +50,22 @@
   _.last = function(array, n) {
     /* START SOLUTION */
 
+    if(n < 0 || n === 0 || array.length === 0 ) {
+      return [];
+    } else if(array.length < n) {
+      return array;
+    } else if (n === undefined) {
+      return array[array.length-1];
+    } else {
+      return array.slice(array.length-n);
+    }
+
+    //array[array.length-1]
+    //array.slice(n, array.length-1)
+    //return entire array if second arguemnt is greater than the length of the array
+    // if negative number return empty []
+    //if n =0 return []
+    //if array.length  return  []
     /* END SOLUTION */
   };
 
@@ -53,36 +76,116 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     /* START SOLUTION */
+    if(Array.isArray(collection)) {
+      for(let i = 0; i < collection.length; i++) {
+        iterator(collection[i],i,collection);
+      }
+    } else {
+      let keysArr = [];
+      let valueArr = [];
+      for(let [key, value] of Object.entries(collection)) {
+        iterator(value,key, collection);
+      }
+    }
+    };
 
     /* END SOLUTION */
-  };
+    //does not mutate input array creates new array with input
+    //should iterate over arrays and provide access to each value
+    //proivde access to each index
+    //if array should return nested array with index
+    //iterate over arrays and provide access to the original collection -letter index collection
+    //if values of letters array are not numeric do not iterate over
+    //if obj provide access to each value  - for key in colletion  - might need to create new array
+    //should iterate over object and provide access to each key - push to array with value and property  - should be nested array   [['dog','d]]
+    //iterate over object and provide access to original object  [value, property, object]
+    //should not confuse object witha  length property for an array
+
+
+    //needs to check if collection is an array or object
+    //should be function
+    //should not return anything
+    //should not mutate the input array
+
+
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
-  _.indexOf = function(array, target){
+  _.indexOf = function(array, target, startingIndex){
     /* START SOLUTION */
+    let index = -1;
+    if(array.indexOf(target) > -1 && !startingIndex) {
+      index = array.indexOf(target);
+    } else if(arguments[2] !== undefined) {
+      index = array.indexOf(target, startingIndex);
+    }
+    return index;
+
+//array.indexOf(target, starting);
+    // arr.indexOf(searchElement[, fromIndex])
 
     /* END SOLUTION */
+
+    //returns first index of value if it appears multiple times
+    // should be able to take a third argument that indicates starting index
+
+ //if value is not present return -1  -- if value is undefined return -1
+//if value is found return index of value
   };
 
   //Create a function for findIndex to test its existence
   _.findIndex = function(array, test){
     /* START SOLUTION */
-
-    /* END SOLUTION */
+    let elementIndex = -1;
+    for(let i = 0; i < array.length; i++) {
+      if(test(array[i])) {
+        elementIndex = i;
+        return elementIndex;
+      }
+    }
+    return elementIndex;
   }
-  
+
+//if passes test, return index of first element in array
+// if elements in array do not pass, return -1
+// should not modify input array
+
+
+// should exist
+    /* END SOLUTION */
+
+
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
     /* START SOLUTION */
+    let newArr = [];
+    for(let i = 0; i < collection.length; i++) {
+      if(test(collection[i])) {
+        newArr.push(collection[i]);
+      }
+    }
+    return newArr;
+  }
+  // create a newArr  and pushing values if it passes test
+//should return list of values that pass the test
+// should work for boolean
+//should retrun empty array if no elements pass test
+//should not mutate the original array
+//creates a new array
+
 
     /* END SOLUTION */
-  };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     /* START SOLUTION */
-
+    let newArr = [];
+    for(let i = 0; i < collection.length; i++) {
+      if(!test(collection[i])) {
+        newArr.push(collection[i]);
+      }
+    }
+    return newArr;
     /* END SOLUTION */
   };
 
@@ -90,6 +193,20 @@
   _.uniq = function(array, isSorted, iterator) {
     /* START SOLUTION */
 
+    //let noDuplicate = array.filter(element => element === element)
+    //return noDuplicate;
+    let set1 = new Set(array);
+    let arr = Array.from(set1);
+    return arr;
+
+
+
+    //if array.length <1 return []
+    //return array with no duplicate values
+    //if array is empty return []
+    //not return a sorted list if isSorted is false
+    //gives new array based on iteratee function
+    //result should be an array
     /* END SOLUTION */
   };
 
