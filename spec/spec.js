@@ -470,8 +470,7 @@ if (typeof require === 'function') {
         let myIter = function(value) {
           return value === 3;
         };
-
-        expect(_.uniq(mySorted, myIter)).to.deep.equal([1, 3]);
+        expect(_.uniq(mySorted, true, myIter)).to.deep.equal([1, 3]);
       });
 
       //it should expect our result to be an array
