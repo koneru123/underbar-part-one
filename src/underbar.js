@@ -192,12 +192,41 @@
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     /* START SOLUTION */
+    //let isSorted = false;
+    let noDuplicate = array.filter((
+      element, index) => array.indexOf(element) === index );
+    let noDup = noDuplicate;
+    return noDup;
+/*
+    let newArr= [];
+    //let noDup1 = iterator(noDup[0]); //false
+    for( let i = 1; i< noDup.length; i++) {
+      if(iterator(noDup[i]) === true) {
+        newArr.push(noDup[0],noDup[i]);
+      }
+    }
+    return newArr;*/
+  };
 
-    //let noDuplicate = array.filter(element => element === element)
+
+    // [1,2,3,4]
+    // for iteratorn(noDup[i])
+  //   newArr1
+  //   noDup1 = iterator(noDup[0]) => false
+  // for(let i= 1; i < noDup.lengthl i++){
+  //    if(iterator(noDup[i]) === true)
+  //    //noDup1 = iterator(noDup[i])
+  //   newArr1.push(noDup[1], noDup[i]); [1,3,4]
+
+
+    // if()
+    // false  - push 1 to new arra [1]
+    // true  - push 3 to the new [1,3]
+
     //return noDuplicate;
-    let set1 = new Set(array);
+    /* let set1 = new Set(array);
     let arr = Array.from(set1);
-    return arr;
+    return arr; */
 
 
 
@@ -208,15 +237,39 @@
     //gives new array based on iteratee function
     //result should be an array
     /* END SOLUTION */
-  };
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     /* START SOLUTION */
+    if(Array.isArray(collection)) {
+      let newArr = [];
+      for(let i = 0; i < collection.length; i++) {
+        newArr.push(iterator(collection[i], i));
+      }
+      return newArr;
+    } else {
+      let newArr1 = [];
+      for(let [key, value] of Object.entries(collection)) {
+        newArr1.push(iterator(value));
+      }
+      return newArr1;
+    }
+  };
+
+
+//should return new array of transformed values
+//should itterate over every element and its index in input array
+//should return an array
+//map through object and return new array
+
+
+//should not mutate original input
+//should exiist
+
 
     /* END SOLUTION */
-  };
+
 
   /*
    * TIP: map is really handy when you want to transform an array of
@@ -234,7 +287,28 @@
     /* START SOLUTION */
 
     /* END SOLUTION */
+    let newArr = [];
+    for(let i = 0; i < collection.length; i++) {
+      if(!Array.isArray(collection[i])) {
+        for(let val in collection[i]) {
+          if(key !== val) {
+            newArr.push(undefined);
+          } else {
+            newArr.push(collection[i][val]);
+          }
+        }
+      }
+    }
+    return newArr;
   };
+
+// should return an array
+//should not mutate original arguemnt
+//collection is always an array
+//if given mixed data types, return array
+//if key is undefined return an array of undefined
+
+
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
@@ -248,8 +322,24 @@
   //
   _.reduce = function(collection, iterator, accumulator) {
     /* START SOLUTION */
-
     /* END SOLUTION */
+
+    let sum = 1;
+    let reduceValue = collection.reduce((sum, currentValue) =>
+      sum + currentValue);
+    return reduceValue;
+//accumulator = iterator(collection[i])
+
   };
+  // collection.reduce((acc,curr) => acc*curr,0)
+
+
+
+  //if accumulator is not defined, starting value will be the collections first element
+  //should work with no memo
+  //reduce in the correct order
+  //should work when the accumulat is a primitive value
+  //should work if memo is an object - e.g empty object
+  //does not mutate input array - creates a new array; let newArr = [];
 
 }());
